@@ -5,9 +5,11 @@ android application for Harmony project
 
 ## Introduction
 
-This is an android application for anonymous lettering service
+This is an android application for anonymous mailing service
 
 ## Team
+
+https://github.com/namsic/harmony
 
 namsic : Team_leader
 
@@ -26,3 +28,7 @@ yujin8731 : 깍두기
 + kotlin | 211-1.5.30
 
 ## Preview
+
+## Dependencies 
+
+## License
