@@ -17,9 +17,9 @@ B2SIC : Server
 
 chanw12 : Web
 
-regular1020 : android
+regular1020 : Android
 
-yujin8731 : 깍두기
+yujin8731 : Assistant
 
 ## Development Environment
 
