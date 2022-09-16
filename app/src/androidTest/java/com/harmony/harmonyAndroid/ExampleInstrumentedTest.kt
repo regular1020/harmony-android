@@ -1,4 +1,4 @@
-package com.example.harmony
+package com.harmony.harmonyAndroid
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
