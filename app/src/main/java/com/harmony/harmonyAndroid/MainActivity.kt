@@ -1,7 +1,8 @@
-package com.example.harmony
+package com.harmony.harmonyAndroid
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.harmony.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
