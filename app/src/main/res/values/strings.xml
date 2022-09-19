@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">harmony</string>
+    <string name="sign_up_header">harmony 회원가입</string>
+    <string name="id_input_innerText">ID(필수)</string>
+    <string name="pw_input_innerText">비밀번호(영어, 숫자 포함 6자리 이상)</string>
+    <string name="phone_input_innerText">전화번호(필수)</string>
+    <string name="terms_of_use">이용약관 동의</string>
+    <string name="show_terms">보기</string>
+    <string name="sign_up_button">회원가입</string>
 </resources>
