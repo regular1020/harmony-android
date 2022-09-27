@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Harmony">
         <activity
+            android:name="com.harmony.harmonyAndroid.sign_in.SignInActivity"
+            android:exported="false" />
+        <activity
             android:name="com.harmony.harmonyAndroid.sign_up.SignUpActivity"
             android:exported="false" />
         <activity

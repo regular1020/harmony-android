@@ -3,9 +3,7 @@ package com.harmony.harmonyAndroid.sign_up
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
-import com.example.harmony.R
 import com.example.harmony.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
@@ -27,9 +25,9 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        val userInputID = binding.ptId.text.toString()
-        val userInputPW = binding.ptPassword.text.toString()
-        val userInputPhone = binding.ptPhone.text.toString()
+        val userInputID = binding.ptSignUpId.text.toString()
+        val userInputPW = binding.ptSignUpPassword.text.toString()
+        val userInputPhone = binding.ptSignUpPhone.text.toString()
         val userCheckTerm = binding.cbTermOfService.isChecked
 
         signUpViewModel.updateID(userInputID)

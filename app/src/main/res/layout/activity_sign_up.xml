@@ -27,7 +27,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <EditText
-            android:id="@+id/pt_id"
+            android:id="@+id/pt_sign_up_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -38,7 +38,7 @@
             android:minHeight="48dp" />
 
         <EditText
-            android:id="@+id/pt_password"
+            android:id="@+id/pt_sign_up_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -50,7 +50,7 @@
             android:textColorHint="#757575" />
 
         <EditText
-            android:id="@+id/pt_phone"
+            android:id="@+id/pt_sign_up_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
