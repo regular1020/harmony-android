@@ -4,8 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.harmony.databinding.ActivityMainBinding
-import com.harmony.harmonyAndroid.sign_in.SignInActivity
-import com.harmony.harmonyAndroid.sign_up.SignUpActivity
+import com.harmony.harmonyAndroid.activity.SignInActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        // onDestroy 에서 binding class 인스턴스 참조를 정리해주어야 한다.
         mBinding = null
         super.onDestroy()
     }

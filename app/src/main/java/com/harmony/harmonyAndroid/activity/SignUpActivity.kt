@@ -1,27 +1,24 @@
-package com.harmony.harmonyAndroid.sign_up
+package com.harmony.harmonyAndroid.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.harmony.databinding.ActivitySignUpBinding
+import com.harmony.harmonyAndroid.viewmodel.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
-
-    lateinit var signUpViewModel: SignUpViewModel
-
-    private var mBinding: ActivitySignUpBinding? = null
-    private val binding get() = mBinding!!
+    private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
+    private val viewModel by lazy { ViewModelProvider(this, SignUpViewModel.Factory(application))[SignUpViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivitySignUpBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
-        signUpViewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
 
         binding.btnSignup.setOnClickListener(this)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
     }
 
     override fun onClick(view: View?) {
@@ -30,11 +27,11 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         val userInputPhone = binding.ptSignUpPhone.text.toString()
         val userCheckTerm = binding.cbTermOfService.isChecked
 
-        signUpViewModel.updateID(userInputID)
-        signUpViewModel.updatePW(userInputPW)
-        signUpViewModel.updatePhone(userInputPhone)
-        signUpViewModel.updateTerm(userCheckTerm)
+        viewModel.updateID(userInputID)
+        viewModel.updatePW(userInputPW)
+        viewModel.updatePhone(userInputPhone)
+        viewModel.updateTerm(userCheckTerm)
 
-        signUpViewModel.checkInput(this)
+        viewModel.checkInput(this)
     }
 }

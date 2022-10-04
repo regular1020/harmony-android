@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.harmony">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Harmony">
         <activity
-            android:name="com.harmony.harmonyAndroid.sign_in.SignInActivity"
+            android:name="com.harmony.harmonyAndroid.activity.SignInActivity"
             android:exported="false" />
         <activity
-            android:name="com.harmony.harmonyAndroid.sign_up.SignUpActivity"
+            android:name="com.harmony.harmonyAndroid.activity.SignUpActivity"
             android:exported="false" />
         <activity
             android:name="com.harmony.harmonyAndroid.MainActivity"

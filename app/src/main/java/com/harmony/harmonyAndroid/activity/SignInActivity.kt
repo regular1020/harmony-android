@@ -1,4 +1,4 @@
-package com.harmony.harmonyAndroid.sign_in
+package com.harmony.harmonyAndroid.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.harmony.databinding.ActivitySignInBinding
-import com.harmony.harmonyAndroid.sign_up.SignUpActivity
+import com.harmony.harmonyAndroid.viewmodel.SignInViewModel
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
 

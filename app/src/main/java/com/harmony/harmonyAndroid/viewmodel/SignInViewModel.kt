@@ -1,4 +1,4 @@
-package com.harmony.harmonyAndroid.sign_in
+package com.harmony.harmonyAndroid.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
