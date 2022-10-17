@@ -22,16 +22,18 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        val userInputID = binding.ptSignUpId.text.toString()
-        val userInputPW = binding.ptSignUpPassword.text.toString()
-        val userInputPhone = binding.ptSignUpPhone.text.toString()
-        val userCheckTerm = binding.cbTermOfService.isChecked
+        if (view!!.id == binding.btnSignup.id) {
+            val userInputID = binding.ptSignUpId.text.toString()
+            val userInputPW = binding.ptSignUpPassword.text.toString()
+            val userInputPhone = binding.ptSignUpPhone.text.toString()
+            val userCheckTerm = binding.cbTermOfService.isChecked
 
-        viewModel.updateID(userInputID)
-        viewModel.updatePW(userInputPW)
-        viewModel.updatePhone(userInputPhone)
-        viewModel.updateTerm(userCheckTerm)
+            viewModel.updateID(userInputID)
+            viewModel.updatePW(userInputPW)
+            viewModel.updatePhone(userInputPhone)
+            viewModel.updateTerm(userCheckTerm)
 
-        viewModel.checkInput(this)
+            viewModel.checkInput(this)
+        }
     }
 }
