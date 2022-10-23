@@ -2,14 +2,14 @@ package com.harmony.harmonyAndroid.network
 
 import org.json.JSONObject
 import retrofit2.Response
-import retrofit2.http.Field
+import retrofit2.http.Body
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface SignUpInterface {
-    @POST("post_user_info")
+    @Headers("accept: application/json", "content-type: application/json")
+    @POST("/member/join")
     suspend fun postSignUp(
-        @Field("id") id: String,
-        @Field("phone") phone: String,
-        @Field("pw") pw: String
+        @Body params: HashMap<String, Any>
     ): Response<JSONObject>
 }

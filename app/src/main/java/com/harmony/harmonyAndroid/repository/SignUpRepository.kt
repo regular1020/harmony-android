@@ -17,6 +17,6 @@ class SignUpRepository(application: Application) {
     }
 
     suspend fun retrofitSignUp(modelSingUpComponent: ModelSignUpComponent): Response<JSONObject> {
-        return SignUpObject.getRetrofitService.postSignUp(modelSingUpComponent.id, modelSingUpComponent.phone, modelSingUpComponent.pw)
+        return SignUpObject.getRetrofitService.postSignUp(hashMapOf("user_id" to modelSingUpComponent.id, "password" to modelSingUpComponent.pw, "phone_number" to modelSingUpComponent.phone))
     }
 }
