@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "317552533336",
+    "project_id": "harmony-83275",
+    "storage_bucket": "harmony-83275.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317552533336:android:fea339ed3bb70089920f2d",
+        "android_client_info": {
+          "package_name": "com.harmony.harmonyAndroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317552533336-g9ag3vjib018pqr6p10a4pb7evp5akt0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.harmony.harmonyAndroid",
+            "certificate_hash": "845f044b79c4742c92cbead07c732c5a9726b445"
+          }
+        },
+        {
+          "client_id": "317552533336-dn0k5spoq8qrbrj95bbf4734q32cnr01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6bmeyF-P_R6eAJu7wlGwD7MNLjBeQpQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317552533336-dn0k5spoq8qrbrj95bbf4734q32cnr01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
