@@ -1,18 +1,11 @@
 package com.harmony.harmonyAndroid.activity
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.harmony.databinding.ActivitySignUpBinding
-import com.harmony.harmonyAndroid.MainActivity
 import com.harmony.harmonyAndroid.viewmodel.SignUpViewModel
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }

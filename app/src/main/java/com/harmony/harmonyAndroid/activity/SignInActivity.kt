@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.harmony.databinding.ActivitySignInBinding
-import com.example.harmony.databinding.ActivitySignUpBinding
 import com.harmony.harmonyAndroid.viewmodel.SignInViewModel
-import com.harmony.harmonyAndroid.viewmodel.SignUpViewModel
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
     private val binding by lazy { ActivitySignInBinding.inflate(layoutInflater) }

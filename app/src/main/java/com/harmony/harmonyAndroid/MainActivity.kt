@@ -3,11 +3,14 @@ package com.harmony.harmonyAndroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.harmony.databinding.ActivityMainBinding
 import com.harmony.harmonyAndroid.activity.SignInActivity
+import com.harmony.harmonyAndroid.preference.SharedManager
 
 class MainActivity : AppCompatActivity() {
 
+    private val sharedManager: SharedManager by lazy { SharedManager(this) }
     private var mBinding: ActivityMainBinding? = null
     private val binding get() = mBinding!!
 
@@ -17,7 +20,8 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnNavigateSignup.setOnClickListener {
+        val user = sharedManager.getUserData()
+        if (user.id == "") {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
