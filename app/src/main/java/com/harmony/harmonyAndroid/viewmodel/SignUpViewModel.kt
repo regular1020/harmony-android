@@ -6,15 +6,10 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import com.harmony.harmonyAndroid.data.ModelSignUpComponent
-import com.harmony.harmonyAndroid.repository.SignUpRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import com.harmony.harmonyAndroid.repository.UserManagementRepository
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
-import okhttp3.internal.wait
 
-class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
+class SignUpViewModel(private val repository: UserManagementRepository) : ViewModel() {
     private val _id = MutableLiveData<String>()
     private val _phone = MutableLiveData<String>()
     private val _pw = MutableLiveData<String>()
@@ -31,7 +26,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     class Factory(private val application: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return SignUpViewModel(SignUpRepository.getInstance(application)!!) as T
+            return SignUpViewModel(UserManagementRepository.getInstance(application)!!) as T
         }
     }
 
@@ -143,7 +138,6 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                         }
                     }
                 }
-                Log.d("회원가입", response.toString())
             }
         }
     }

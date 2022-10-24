@@ -6,11 +6,11 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-interface SignUpInterface {
+interface SignInInterface {
     @Headers("accept: application/json", "content-type: application/json")
 
-    @POST("/member/join")
-    suspend fun postSignUp(
+    @POST("/member/login")
+    suspend fun postSignIn(
         @Body params: HashMap<String, Any>
     ): Response<JSONObject>
 }

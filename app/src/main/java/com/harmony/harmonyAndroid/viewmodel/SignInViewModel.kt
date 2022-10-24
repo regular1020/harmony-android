@@ -1,10 +1,14 @@
 package com.harmony.harmonyAndroid.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.AlertDialog
+import android.app.Application
+import androidx.lifecycle.*
+import com.harmony.harmonyAndroid.data.ModelSignInComponent
+import com.harmony.harmonyAndroid.data.ModelSignUpComponent
+import com.harmony.harmonyAndroid.repository.UserManagementRepository
+import kotlinx.coroutines.launch
 
-class SignInViewModel : ViewModel() {
+class SignInViewModel(private val repository: UserManagementRepository) : ViewModel() {
     private val _id = MutableLiveData<String>()
     private val _pw = MutableLiveData<String>()
 
@@ -13,14 +17,18 @@ class SignInViewModel : ViewModel() {
         _pw.value = ""
     }
 
-    // getter
+    class Factory(private val application: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return SignInViewModel(UserManagementRepository.getInstance(application)!!) as T
+        }
+    }
+
     val id: LiveData<String>
         get() = _id
 
     val pw: LiveData<String>
         get() = _pw
 
-    // setter
     fun updateID(input: String) {
         _id.value = input
     }
@@ -29,8 +37,12 @@ class SignInViewModel : ViewModel() {
         _pw.value = input
     }
 
-    // 로그인 진행
     fun signIn() {
+        viewModelScope.launch {
+            val response = repository.retrofitSignIn(ModelSignInComponent(_id.value!!, _pw.value!!))
+            if (response.isSuccessful) {
 
+            }
+        }
     }
 }
