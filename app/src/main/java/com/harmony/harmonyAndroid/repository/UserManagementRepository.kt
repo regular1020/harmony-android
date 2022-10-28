@@ -1,6 +1,8 @@
 package com.harmony.harmonyAndroid.repository
 
 import android.app.Application
+import com.harmony.harmonyAndroid.data.ModelDuplicateCheckByIDComponent
+import com.harmony.harmonyAndroid.data.ModelDuplicateCheckByPhoneNumberComponent
 import com.harmony.harmonyAndroid.data.ModelSignInComponent
 import com.harmony.harmonyAndroid.data.ModelSignUpComponent
 import com.harmony.harmonyAndroid.network.UserManagementObject
@@ -23,5 +25,13 @@ class UserManagementRepository(application: Application) {
 
     suspend fun retrofitSignIn(modelSignInComponent: ModelSignInComponent): Response<JSONObject> {
         return UserManagementObject.getSignInService.postSignIn(hashMapOf("user_id" to modelSignInComponent.id, "password" to modelSignInComponent.pw))
+    }
+
+    suspend fun retrofitDuplicateCheckByID(modelDuplicateCheckByIDComponent: ModelDuplicateCheckByIDComponent): Response<JSONObject> {
+        return UserManagementObject.getSignUpService.getMemberByID(modelDuplicateCheckByIDComponent.user_id)
+    }
+
+    suspend fun retrofitDuplicateCheckByPhoneNumber(modelDuplicateCheckByPhoneNumberComponent: ModelDuplicateCheckByPhoneNumberComponent): Response<JSONObject> {
+        return UserManagementObject.getSignUpService.getMemberByPhone(modelDuplicateCheckByPhoneNumberComponent.phone_number)
     }
 }

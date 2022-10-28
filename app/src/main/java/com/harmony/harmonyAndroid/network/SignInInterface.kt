@@ -9,7 +9,7 @@ import retrofit2.http.POST
 interface SignInInterface {
     @Headers("accept: application/json", "content-type: application/json")
 
-    @POST("/member/login")
+    @POST("/member/auth")
     suspend fun postSignIn(
         @Body params: HashMap<String, Any>
     ): Response<JSONObject>

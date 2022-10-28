@@ -17,11 +17,12 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
         setContentView(binding.root)
 
+        binding.btnSignUp.setOnClickListener(this)
         binding.btnSignIn.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
-        when(view!!.id) {
+        when(view?.id) {
             binding.btnSignUp.id -> {
                 val intent = Intent(this, SignUpActivity::class.java)
                 startActivity(intent)
@@ -36,11 +37,10 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
                 viewModel.signIn()
             }
             binding.btnFindId.id -> {
-
             }
             binding.btnFindPw.id -> {
-
             }
+            else -> null
         }
     }
 }

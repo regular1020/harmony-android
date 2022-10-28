@@ -1,10 +1,11 @@
 package com.harmony.harmonyAndroid.network
 
+import com.example.harmony.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object UserManagementObject {
-    private const val signUpURL = "http://115.85.181.222:8080"
+    private const val signUpURL = BuildConfig.SERVER
 
     private val getRetrofit by lazy{
         Retrofit.Builder()

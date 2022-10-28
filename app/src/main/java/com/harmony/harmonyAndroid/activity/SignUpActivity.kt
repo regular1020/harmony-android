@@ -17,6 +17,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         binding.btnSignup.setOnClickListener(this)
+        binding.btnIdCheck.setOnClickListener(this)
+        binding.btnPhoneCheck.setOnClickListener(this)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -28,18 +30,39 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        if (view!!.id == binding.btnSignup.id) {
-            val userInputID = binding.ptSignUpId.text.toString()
-            val userInputPW = binding.ptSignUpPassword.text.toString()
-            val userInputPhone = binding.ptSignUpPhone.text.toString()
-            val userCheckTerm = binding.cbTermOfService.isChecked
+        when(view?.id) {
+            binding.btnSignup.id -> {
+                val userInputID = binding.ptSignUpId.text.toString()
+                val userInputPW = binding.ptSignUpPassword.text.toString()
+                val userInputPhone = binding.ptSignUpPhone.text.toString()
+                val userInputPWCheck = binding.ptSignUpPasswordCheck.text.toString()
+                val userCheckTerm = binding.cbTermOfService.isChecked
 
-            viewModel.updateID(userInputID)
-            viewModel.updatePW(userInputPW)
-            viewModel.updatePhone(userInputPhone)
-            viewModel.updateTerm(userCheckTerm)
+                viewModel.updateID(userInputID)
+                viewModel.updatePW(userInputPW)
+                viewModel.updatePWCheck(userInputPWCheck)
+                viewModel.updatePhone(userInputPhone)
+                viewModel.updateTerm(userCheckTerm)
 
-            viewModel.checkInput(this)
+                viewModel.hashPassWord()
+
+                viewModel.signUp(this)
+            }
+            binding.btnIdCheck.id -> {
+                val userInputID = binding.ptSignUpId.text.toString()
+
+                viewModel.updateID(userInputID)
+
+                viewModel.idDuplicateCheck(this)
+            }
+            binding.btnPhoneCheck.id -> {
+                val userInputPhone = binding.ptSignUpPhone.text.toString()
+
+                viewModel.updatePhone(userInputPhone)
+
+                viewModel.phoneDuplicateCheck(this)
+            }
+            else -> null
         }
     }
 }
