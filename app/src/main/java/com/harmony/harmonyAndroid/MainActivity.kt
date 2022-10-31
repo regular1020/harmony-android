@@ -3,8 +3,8 @@ package com.harmony.harmonyAndroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.harmony.databinding.ActivityMainBinding
 import com.harmony.harmonyAndroid.activity.SignInActivity
+import com.harmony.harmonyAndroid.databinding.ActivityMainBinding
 import com.harmony.harmonyAndroid.preference.SharedManager
 
 class MainActivity : AppCompatActivity() {

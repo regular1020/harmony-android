@@ -199,35 +199,27 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
         viewModelScope.launch {
             val response = repository.retrofitSignUp(ModelSignUpComponent(_id.value!!, _phone.value!!, _hashedPW.value!!))
             if (response.isSuccessful) {
-                if (response.code() == 200) {
-                    _navigate.value = true
-                } else {
-                    if (response.body()!!.has("errorCode")) {
-                        val errType = response.body()!!["errorCode"].toString().toInt()%100
+                _navigate.value = true
+                return@launch
+            }
+            if (response.body()!!.has("errorCode")) {
+                val errType = response.body()!!["errorCode"].toString().toInt()%100
 
-                        val builder = AlertDialog.Builder(context)
-                        when (errType) {
-                            1 -> builder.setTitle("이미 사용중인 아이디입니다.")
-                                .setMessage("새로운 아이디를 입력해주십시오.")
-                                .setPositiveButton("확인") { _, _ -> }
-                            2 -> builder.setTitle("이미 사용중인 전화번호입니다.")
-                                .setMessage("새로운 전화번호를 입력해주십시오.")
-                                .setPositiveButton("확인") { _, _ -> }
-                            3 -> builder.setTitle("잘못된 아이디 형식입니다.")
-                                .setMessage("아이디는 알파벳 소문자, 숫자가 허용됩니다. \n아이디 첫 글자는 소문자 알파벳이어야 합니다.")
-                                .setPositiveButton("확인") { _, _ -> }
-                            else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
-                                .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
-                                .setPositiveButton("확인") { _, _ -> }
-                        }
-                        builder.show()
-                    }
-                }
-            } else {
                 val builder = AlertDialog.Builder(context)
-                builder.setTitle("네트워크 상황이 원할하지 않습니다.")
-                    .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
-                    .setPositiveButton("확인") { _, _ -> }
+                when (errType) {
+                    1 -> builder.setTitle("이미 사용중인 아이디입니다.")
+                        .setMessage("새로운 아이디를 입력해주십시오.")
+                        .setPositiveButton("확인") { _, _ -> }
+                    2 -> builder.setTitle("이미 사용중인 전화번호입니다.")
+                        .setMessage("새로운 전화번호를 입력해주십시오.")
+                        .setPositiveButton("확인") { _, _ -> }
+                    3 -> builder.setTitle("잘못된 아이디 형식입니다.")
+                        .setMessage("아이디는 알파벳 소문자, 숫자가 허용됩니다. \n아이디 첫 글자는 소문자 알파벳이어야 합니다.")
+                        .setPositiveButton("확인") { _, _ -> }
+                    else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
+                        .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
+                        .setPositiveButton("확인") { _, _ -> }
+                }
                 builder.show()
             }
         }

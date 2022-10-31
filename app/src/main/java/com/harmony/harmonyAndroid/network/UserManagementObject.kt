@@ -1,6 +1,6 @@
 package com.harmony.harmonyAndroid.network
 
-import com.example.harmony.BuildConfig
+import com.harmony.harmonyAndroid.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

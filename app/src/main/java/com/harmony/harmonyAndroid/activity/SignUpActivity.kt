@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.example.harmony.databinding.ActivitySignUpBinding
+import com.harmony.harmonyAndroid.databinding.ActivitySignUpBinding
 import com.harmony.harmonyAndroid.viewmodel.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
