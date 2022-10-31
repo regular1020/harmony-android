@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".YourFirebaseMessagingService"
+            android:name=".service.HarmonyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
