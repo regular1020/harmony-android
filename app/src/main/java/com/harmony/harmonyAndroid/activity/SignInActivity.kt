@@ -37,8 +37,10 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
                 viewModel.signIn()
             }
             binding.btnFindId.id -> {
+                // TODO : ID찾기 구현
             }
             binding.btnFindPw.id -> {
+                // TODO : 비밀번호 찾기 구현
             }
             else -> null
         }
