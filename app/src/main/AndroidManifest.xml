@@ -4,13 +4,14 @@
 
     <application
         android:allowBackup="true"
+        android:name=".database.GlobalApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Harmony">
         <activity
-            android:name="com.harmony.harmonyAndroid.activity.MessageActivity"
+            android:name="com.harmony.harmonyAndroid.activity.MessageBoxActivity"
             android:exported="false" />
         <activity
             android:name="com.harmony.harmonyAndroid.MainActivity"
