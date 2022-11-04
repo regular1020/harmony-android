@@ -34,6 +34,8 @@ class HarmonyFirebaseMessagingService : FirebaseMessagingService() {
 
         Log.d(tag, "onMessageReceived() - title : $title")
         Log.d(tag, "onMessageReceived() - message : $message")
+
+        sendNotification(remoteMessage.notification!!.title, remoteMessage.notification!!.body)
     }
 
     private fun sendNotification(title: String?, message: String?) {
