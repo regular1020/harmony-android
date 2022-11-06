@@ -1,6 +1,7 @@
 package com.harmony.harmonyAndroid.repository
 
 import android.app.Application
+import com.google.gson.JsonObject
 import com.harmony.harmonyAndroid.data.ModelDuplicateCheckByIDComponent
 import com.harmony.harmonyAndroid.data.ModelDuplicateCheckByPhoneNumberComponent
 import com.harmony.harmonyAndroid.data.ModelSignInComponent
@@ -19,19 +20,19 @@ class UserManagementRepository(application: Application) {
         }
     }
 
-    suspend fun retrofitSignUp(modelSingUpComponent: ModelSignUpComponent): Response<JSONObject> {
+    suspend fun retrofitSignUp(modelSingUpComponent: ModelSignUpComponent): Response<JsonObject> {
         return UserManagementObject.getSignUpService.postSignUp(hashMapOf("user_id" to modelSingUpComponent.id, "password" to modelSingUpComponent.pw, "phone_number" to modelSingUpComponent.phone))
     }
 
-    suspend fun retrofitSignIn(modelSignInComponent: ModelSignInComponent): Response<JSONObject> {
+    suspend fun retrofitSignIn(modelSignInComponent: ModelSignInComponent): Response<JsonObject> {
         return UserManagementObject.getSignInService.postSignIn(hashMapOf("user_id" to modelSignInComponent.id, "password" to modelSignInComponent.pw))
     }
 
-    suspend fun retrofitDuplicateCheckByID(modelDuplicateCheckByIDComponent: ModelDuplicateCheckByIDComponent): Response<JSONObject> {
+    suspend fun retrofitDuplicateCheckByID(modelDuplicateCheckByIDComponent: ModelDuplicateCheckByIDComponent): Response<JsonObject> {
         return UserManagementObject.getSignUpService.getMemberByID(modelDuplicateCheckByIDComponent.user_id)
     }
 
-    suspend fun retrofitDuplicateCheckByPhoneNumber(modelDuplicateCheckByPhoneNumberComponent: ModelDuplicateCheckByPhoneNumberComponent): Response<JSONObject> {
+    suspend fun retrofitDuplicateCheckByPhoneNumber(modelDuplicateCheckByPhoneNumberComponent: ModelDuplicateCheckByPhoneNumberComponent): Response<JsonObject> {
         return UserManagementObject.getSignUpService.getMemberByPhone(modelDuplicateCheckByPhoneNumberComponent.phone_number)
     }
 }

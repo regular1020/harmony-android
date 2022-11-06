@@ -10,7 +10,7 @@ import com.harmony.harmonyAndroid.data.ModelDuplicateCheckByPhoneNumberComponent
 import com.harmony.harmonyAndroid.data.ModelSignUpComponent
 import com.harmony.harmonyAndroid.repository.UserManagementRepository
 import kotlinx.coroutines.launch
-import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -43,18 +43,6 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
     val id: LiveData<String>
         get() = _id
 
-    val phone: LiveData<String>
-        get() = _phone
-
-    val pw: LiveData<String>
-        get() = _pw
-
-    val pwCheck: LiveData<String>
-        get() = _pwCheck
-
-    val term: LiveData<Boolean>
-        get() = _term
-
     val navigate: LiveData<Boolean>
         get() = _navigate
 
@@ -78,10 +66,6 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
         _term.value = input
     }
 
-    fun updateNavigate(input: Boolean) {
-        _navigate.value = input
-    }
-
     fun idDuplicateCheck(context: Context) {
         viewModelScope.launch {
             val response = repository.retrofitDuplicateCheckByID(
@@ -89,31 +73,63 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
             )
             val builder = AlertDialog.Builder(context)
             if (response.isSuccessful) {
-                if (response.code() != 200) {
-                    if (response.body()!!.has("error_code")) {
-                        val errType = response.body()!!["errorCode"].toString().toInt()%100
-                        when (errType) {
-                            else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
-                                .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
-                                .setPositiveButton("확인") { _, _ -> }
-                        }
-                    }
-                } else {
-                    if (listOf(response.body()!!["data"]).isNotEmpty()) {
-                        builder.setTitle("이미 사용중인 아이디입니다.")
-                            .setMessage("새로운 아이디를 입력해주십시오.")
-                            .setPositiveButton("확인") { _, _ -> }
-                    } else {
-                        builder.setTitle("사용 가능한 아이디입니다.")
-                            .setPositiveButton("확인") { _, _ -> }
-                    }
+                if (response.body()!!["data"].asJsonArray.size() > 0) {
+                    Log.d("test", response.body()!!["data"].asJsonArray.size().toString())
+                    builder.setTitle("이미 사용중인 아이디입니다.")
+                        .setMessage("새로운 아이디를 입력해주십시오.")
+                        .setPositiveButton("확인") { _, _ -> }
+                    builder.show()
+                    return@launch
                 }
-            } else {
-                builder.setTitle("네트워크 상황이 원할하지 않습니다.")
-                .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
-                .setPositiveButton("확인") { _, _ -> }
+                builder.setTitle("사용 가능한 아이디입니다.")
+                    .setPositiveButton("확인") { _, _ -> }
+                builder.show()
+                return@launch
             }
-            builder.show()
+            var errorObject: JSONObject? = null
+            try {
+                errorObject = JSONObject(response.errorBody()!!.string())
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
+            if (errorObject != null) {
+                val code:Int = errorObject["code"] as Int
+                if (code == 0 || code == 1) {
+                    var errorMessage = ""
+
+                    val errorArray = errorObject.getJSONArray("errors")
+
+                    var i = 0
+                    while (i < errorArray.length()) {
+                        val jsonObject = errorArray.getJSONObject(i)
+                        errorMessage += jsonObject["field"]
+                        errorMessage += "오류\n"
+                        errorMessage += jsonObject["message"]
+                        errorMessage += "\n"
+                        i++
+                    }
+
+                    builder.setTitle(errorObject["message"].toString())
+                        .setMessage(errorMessage)
+                        .setPositiveButton("확인") { _, _ -> }
+
+                    builder.show()
+
+                    return@launch
+                }
+                when (code%100) {
+                    1 -> builder.setTitle(errorObject["message"].toString())
+                        .setMessage("id를 확인해주세요.")
+                        .setPositiveButton("확인") { _, _ -> }
+                    else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
+                        .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
+                        .setPositiveButton("확인") { _, _ -> }
+                }
+                builder.show()
+
+                return@launch
+            }
         }
     }
 
@@ -124,32 +140,68 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
             )
             val builder = AlertDialog.Builder(context)
             if (response.isSuccessful) {
-                if (response.code() != 200) {
-                    if (response.body()!!.has("error_code")) {
-                        val errType = response.body()!!["errorCode"].toString().toInt()%100
-                        when (errType) {
-                            else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
-                                .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
-                                .setPositiveButton("확인") { _, _ -> }
-                        }
-                    }
-                } else {
-                    if (listOf(response.body()!!["data"]).isNotEmpty()) {
-                        builder.setTitle("이미 사용중인 전화번호입니다.")
-                            .setMessage("새로운 전화번호를 입력해주십시오.")
-                            .setPositiveButton("확인") { _, _ -> }
-                    } else {
-                        builder.setTitle("사용 가능한 전화번호입니다.")
-                            .setPositiveButton("확인") { _, _ -> }
-                    }
+                if (response.body()!!["data"].asJsonArray.size() > 0) {
+                    builder.setTitle("이미 사용중인 전화번호입니다.")
+                        .setMessage("새로운 전화번호를 입력해주십시오.")
+                        .setPositiveButton("확인") { _, _ -> }
+                    builder.show()
+                    return@launch
                 }
-            } else {
-                builder.setTitle("네트워크 상황이 원할하지 않습니다.")
-                    .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
+                builder.setTitle("중복되지 않는 전화번호입니다.")
                     .setPositiveButton("확인") { _, _ -> }
+                builder.show()
+                return@launch
             }
-            builder.show()
+            var errorObject: JSONObject? = null
+            try {
+                errorObject = JSONObject(response.errorBody()!!.string())
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
+            if (errorObject != null) {
+                val code:Int = errorObject["code"] as Int
+                if (code == 0 || code == 1) {
+                    var errorMessage = ""
+
+                    val errorArray = errorObject.getJSONArray("errors")
+
+                    var i = 0
+                    while (i < errorArray.length()) {
+                        val jsonObject = errorArray.getJSONObject(i)
+                        errorMessage += jsonObject["field"]
+                        errorMessage += "오류\n"
+                        errorMessage += jsonObject["message"]
+                        errorMessage += "\n"
+                        i++
+                    }
+
+                    builder.setTitle(errorObject["message"].toString())
+                        .setMessage(errorMessage)
+                        .setPositiveButton("확인") { _, _ -> }
+
+                    builder.show()
+
+                    return@launch
+                }
+                when (code%100) {
+                    1 -> builder.setTitle(errorObject["message"].toString())
+                        .setMessage("전화번호를 확인해주세요.")
+                        .setPositiveButton("확인") { _, _ -> }
+                    else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
+                        .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
+                        .setPositiveButton("확인") { _, _ -> }
+                }
+                builder.show()
+
+                return@launch
+            }
         }
+    }
+
+    private fun checkPassWord(): Boolean {
+        val regex = Regex("^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{6,20}$")
+        return regex.matches(_pw.value.toString())
     }
 
     fun hashPassWord() {
@@ -178,6 +230,33 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
     }
 
     fun signUp(context: Context) {
+        if (!checkPassWord()) {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("형식에 맞지 않는 비밀번호입니다.")
+                .setMessage("알파벳 소문자와 숫자로 이루어진 6~20자리 비밀번호여야 합니다.")
+                .setPositiveButton("확인") { _, _ -> }
+
+            builder.show()
+            return
+        }
+        if (_id.value == "") {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("id를 입력하지 않으셨습니다.")
+                .setMessage("id를 입력해주십시오.")
+                .setPositiveButton("확인") { _, _ -> }
+
+            builder.show()
+            return
+        }
+        if (_phone.value == "") {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("전화번호를 입력하지 않으셨습니다.")
+                .setMessage("전화번호를 입력해주십시오.")
+                .setPositiveButton("확인") { _, _ -> }
+
+            builder.show()
+            return
+        }
         if (!_term.value!!) {
             val builder = AlertDialog.Builder(context)
             builder.setTitle("이용 약관에 동의하지 않으셨습니다.")
@@ -198,23 +277,49 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
         }
         viewModelScope.launch {
             val response = repository.retrofitSignUp(ModelSignUpComponent(_id.value!!, _phone.value!!, _hashedPW.value!!))
+            val builder = AlertDialog.Builder(context)
             if (response.isSuccessful) {
                 _navigate.value = true
                 return@launch
             }
-            if (response.body()!!.has("errorCode")) {
-                val errType = response.body()!!["errorCode"].toString().toInt()%100
+            var errorObject: JSONObject? = null
+            try {
+                errorObject = JSONObject(response.errorBody()!!.string())
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
 
-                val builder = AlertDialog.Builder(context)
-                when (errType) {
+            if (errorObject != null) {
+                val code:Int = errorObject["code"] as Int
+                if (code == 0 || code == 1) {
+                    var errorMessage = ""
+
+                    val errorArray = errorObject.getJSONArray("errors")
+
+                    var i = 0
+                    while (i < errorArray.length()) {
+                        val jsonObject = errorArray.getJSONObject(i)
+                        errorMessage += jsonObject["field"]
+                        errorMessage += "오류\n"
+                        errorMessage += jsonObject["message"]
+                        errorMessage += "\n"
+                        i++
+                    }
+                    builder.setTitle(errorObject["message"].toString())
+                        .setMessage(errorMessage)
+                        .setPositiveButton("확인") { _, _ -> }
+
+                    builder.show()
+
+                    return@launch
+                }
+                val errorCode = code%100
+                when (errorCode) {
                     1 -> builder.setTitle("이미 사용중인 아이디입니다.")
-                        .setMessage("새로운 아이디를 입력해주십시오.")
+                        .setMessage("아이디를 확인해주세요.")
                         .setPositiveButton("확인") { _, _ -> }
                     2 -> builder.setTitle("이미 사용중인 전화번호입니다.")
-                        .setMessage("새로운 전화번호를 입력해주십시오.")
-                        .setPositiveButton("확인") { _, _ -> }
-                    3 -> builder.setTitle("잘못된 아이디 형식입니다.")
-                        .setMessage("아이디는 알파벳 소문자, 숫자가 허용됩니다. \n아이디 첫 글자는 소문자 알파벳이어야 합니다.")
+                        .setMessage("전화번호를 확인해주세요.")
                         .setPositiveButton("확인") { _, _ -> }
                     else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
                         .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
