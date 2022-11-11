@@ -38,6 +38,7 @@ class SignInViewModel(private val repository: UserManagementRepository) : ViewMo
     }
 
     fun signIn() {
+        // TODO : 로그인 구현
         viewModelScope.launch {
             val response = repository.retrofitSignIn(ModelSignInComponent(_id.value!!, _pw.value!!))
             if (response.isSuccessful) {

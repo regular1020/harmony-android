@@ -11,6 +11,7 @@ interface SignInInterface {
 
     @POST("/member/auth")
     suspend fun postSignIn(
+        // TODO : 로그인 api 통신 구현
         @Body params: HashMap<String, Any>
     ): Response<JsonObject>
 }
