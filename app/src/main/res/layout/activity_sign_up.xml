@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.harmony.harmonyAndroid.activity.SignUpActivity">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.harmony.harmonyAndroid.viewmodel.SignUpViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <LinearLayout
+            android:id="@+id/vlayout_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="cursive"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/harmony_pink"
+                android:textSize="60sp" />
+
+            <TextView
+                android:id="@+id/tv_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:text="@string/sign_up_header"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/pt_sign_up_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/id_input_innerText"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:textColorHint="@color/text_grey" />
+
+                <Button
+                    android:id="@+id/btn_id_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/grey_rounded_box"
+                    android:text="@string/check_button"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/pt_sign_up_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/phone_input_innerText"
+                    android:inputType="phone"
+                    android:minHeight="48dp"
+                    android:textColorHint="@color/text_grey" />
+
+                <Button
+                    android:id="@+id/btn_phone_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/grey_rounded_box"
+                    android:text="@string/check_button"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/pt_sign_up_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/pw_input_innerText"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:textColorHint="@color/text_grey" />
+
+            <EditText
+                android:id="@+id/pt_sign_up_password_check"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/pw_input_check_innerText"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:textColorHint="@color/text_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cb_term_of_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_margin="20dp"
+                    android:text="@string/terms_of_use" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:background="@drawable/pink_rounded_button"
+                android:text="@string/sign_up_button"
+                android:textColor="@color/white"
+                app:rippleColor="@color/white" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>
