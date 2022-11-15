@@ -27,7 +27,7 @@ class MessageAdapter(val context: Context, val itemList: MutableList<Message>, v
         fun bind(item: Message) {
             binding.message = item
 
-            binding.deleteBtn.setOnClickListener {
+            binding.btnDelete.setOnClickListener {
                 messageBoxViewModel.deleteMessage(item)
             }
         }
