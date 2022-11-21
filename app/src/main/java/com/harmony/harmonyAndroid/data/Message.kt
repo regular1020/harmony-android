@@ -1,10 +1,12 @@
 package com.harmony.harmonyAndroid.data
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.sql.Timestamp
+import kotlinx.parcelize.Parcelize
 
 @Entity
+@Parcelize
 class Message(
     @PrimaryKey(autoGenerate = true) var id: Long,
     var receiver_id : String,
@@ -12,4 +14,4 @@ class Message(
     var title : String,
     var content : String,
     var timestamp: String
-)
+): Parcelable

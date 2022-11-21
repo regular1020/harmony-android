@@ -2,7 +2,6 @@ package com.harmony.harmonyAndroid.database
 
 import android.app.Application
 import androidx.room.Room
-import com.harmony.harmonyAndroid.data.UserData
 import com.harmony.harmonyAndroid.preference.SharedManager
 
 class GlobalApplication: Application() {
