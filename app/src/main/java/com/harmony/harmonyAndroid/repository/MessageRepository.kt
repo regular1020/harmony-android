@@ -15,7 +15,6 @@ class MessageRepository(application: Application) {
     }
     private val messageDBInstance = GlobalApplication.appDataBaseInstance.messageDao()
 
-    suspend fun insertMessage(message: Message) = messageDBInstance.insertMessage(message)
     suspend fun deleteMessage(message: Message) = messageDBInstance.deleteMessage(message)
     suspend fun deleteMessageByID(id: Long) = messageDBInstance.deleteMessageByID(id)
     suspend fun getMessageByReceiverID(receiver_id: String) = messageDBInstance.getMessageByReceiverID(receiver_id)

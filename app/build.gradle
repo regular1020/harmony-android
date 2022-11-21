@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'org.jetbrains.kotlin.android'
+    id("kotlin-parcelize")
 }
 
 android {
@@ -87,4 +88,6 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
+
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 }

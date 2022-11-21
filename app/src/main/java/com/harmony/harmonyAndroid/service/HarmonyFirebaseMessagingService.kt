@@ -15,12 +15,18 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.harmony.harmonyAndroid.MainActivity
 import com.harmony.harmonyAndroid.R
+import com.harmony.harmonyAndroid.data.Message
+import com.harmony.harmonyAndroid.data.MessageAddObject
+import com.harmony.harmonyAndroid.database.GlobalApplication
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class HarmonyFirebaseMessagingService : FirebaseMessagingService() {
     private val tag = "FCM_MESSAGE"
     private val channelName = "Harmony"
     private val channelDescription = "Harmony Message Notification"
     private val channelID = "MessageReceive"
+    private val messageDBInstance = GlobalApplication.appDataBaseInstance.messageDao()
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -28,12 +34,22 @@ class HarmonyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        super.onMessageReceived(remoteMessage)
-        val title = remoteMessage.data["title"]
-        val message = remoteMessage.data["message"]
 
-        Log.d(tag, "onMessageReceived() - title : $title")
-        Log.d(tag, "onMessageReceived() - message : $message")
+        super.onMessageReceived(remoteMessage)
+        if (remoteMessage.data.isNotEmpty()) {
+            val title = remoteMessage.data["title"]
+            val contents = remoteMessage.data["contents"]
+            val timestamp = remoteMessage.data["timestamp"]
+            val sender_id = remoteMessage.data["sender_id"]
+
+            var msg = Message(id = 0, sender_id = sender_id!!, content = contents!!, title = title!!, timestamp = timestamp!!, receiver_id = "test01")
+
+            GlobalScope.launch {
+                messageDBInstance.insertMessage(msg)
+                MessageAddObject.messageAddLiveData.postValue(msg)
+            }
+
+        }
 
         sendNotification(remoteMessage.notification!!.title, remoteMessage.notification!!.body)
     }
@@ -53,6 +69,7 @@ class HarmonyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         NotificationManagerCompat.from(this).notify((System.currentTimeMillis()/100).toInt(), createNotification(title, message))
+
     }
 
 
@@ -71,6 +88,6 @@ class HarmonyFirebaseMessagingService : FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        return notificationBuilder.build()
+        return notificationBuilder.setSmallIcon(R.drawable.ic_baseline_delete_24).build()
     }
 }
