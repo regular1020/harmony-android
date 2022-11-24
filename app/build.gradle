@@ -5,8 +5,12 @@ plugins {
     id("kotlin-parcelize")
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
 android {
     compileSdk 32
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.harmony.harmonyAndroid"
@@ -14,6 +18,8 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "SERVER", properties['server']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,12 +34,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
     viewBinding {
         enabled = true
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
     }
     buildFeatures {
         dataBinding true

@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Harmony">
         <activity
+            android:name=".activity.MessageSendActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MessageDetailActivity"
             android:exported="false" />
         <activity

@@ -1,10 +1,12 @@
 package com.harmony.harmonyAndroid.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.harmony.harmonyAndroid.R
 import com.harmony.harmonyAndroid.adapter.MessageAdapter
 import com.harmony.harmonyAndroid.data.Message
 import com.harmony.harmonyAndroid.database.GlobalApplication
@@ -24,6 +26,12 @@ class MessageBoxActivity : AppCompatActivity() {
 
         binding = ActivityMessageBoxBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.messageBoxToolbar)
+
+        binding.btnSendNewMessage.setOnClickListener{
+            val intent = Intent(this, MessageSendActivity::class.java)
+            startActivity(intent)
+        }
 
         getAllMessage()
         setUpObserver()
