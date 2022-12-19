@@ -14,11 +14,11 @@ interface SignUpInterface {
 
     @GET("/member")
     suspend fun getMemberByID(
-        @Query("user_id") user_id:String
+        @Query("userId") userId:String
     ): Response<JsonObject>
 
     @GET("/member")
     suspend fun getMemberByPhone(
-        @Query("phone_number") phone_number:String
+        @Query("phoneNumber") phoneNumber:String
     ): Response<JsonObject>
 }
