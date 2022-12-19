@@ -67,6 +67,15 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
     }
 
     fun idDuplicateCheck(context: Context) {
+        if (_id.value == "") {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("ID를 입력하지 않으셨습니다.")
+                .setMessage("ID를 입력해주십시오.")
+                .setPositiveButton("확인") { _, _ -> }
+
+            builder.show()
+            return
+        }
         viewModelScope.launch {
             val response = repository.retrofitDuplicateCheckByID(
                 ModelDuplicateCheckByIDComponent(_id.value!!)
@@ -86,46 +95,36 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
                 builder.show()
                 return@launch
             }
+            if (response.code() in 500..599) {
+                builder.setTitle("서버 오류입니다.")
+                    .setMessage("관리자에게 문의해주십시오.")
+                    .setPositiveButton("확인") { _, _ -> }
+                return@launch
+            }
             var errorObject: JSONObject? = null
             try {
                 errorObject = JSONObject(response.errorBody()!!.string())
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
-
             if (errorObject != null) {
-                val code:Int = errorObject["code"] as Int
-                if (code == 0 || code == 1) {
-                    var errorMessage = ""
+                var errorMessage = ""
 
-                    val errorArray = errorObject.getJSONArray("errors")
+                val errorArray = errorObject.getJSONArray("errors")
 
-                    var i = 0
-                    while (i < errorArray.length()) {
-                        val jsonObject = errorArray.getJSONObject(i)
-                        errorMessage += jsonObject["field"]
-                        errorMessage += "오류\n"
-                        errorMessage += jsonObject["message"]
-                        errorMessage += "\n"
-                        i++
-                    }
+                var i = 0
 
-                    builder.setTitle(errorObject["message"].toString())
-                        .setMessage(errorMessage)
-                        .setPositiveButton("확인") { _, _ -> }
-
-                    builder.show()
-
-                    return@launch
+                while (i < errorArray.length()) {
+                    val jsonObject = errorArray.getJSONObject(i)
+                    val errorCode = jsonObject["code"]
+                    if (errorCode == "NotFound")
+                        errorMessage += "ID를 입력해주세요.\n"
+                    i++
                 }
-                when (code%100) {
-                    1 -> builder.setTitle(errorObject["message"].toString())
-                        .setMessage("id를 확인해주세요.")
-                        .setPositiveButton("확인") { _, _ -> }
-                    else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
-                        .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
-                        .setPositiveButton("확인") { _, _ -> }
-                }
+                builder.setTitle("다시 입력해주십시오.")
+                    .setMessage(errorMessage)
+                    .setPositiveButton("확인") { _, _ -> }
+
                 builder.show()
 
                 return@launch
@@ -134,6 +133,15 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
     }
 
     fun phoneDuplicateCheck(context: Context) {
+        if (_phone.value == "") {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("전화번호를 입력하지 않으셨습니다.")
+                .setMessage("전화번호를 입력해주십시오.")
+                .setPositiveButton("확인") { _, _ -> }
+
+            builder.show()
+            return
+        }
         viewModelScope.launch {
             val response = repository.retrofitDuplicateCheckByPhoneNumber(
                 ModelDuplicateCheckByPhoneNumberComponent(_phone.value!!)
@@ -152,46 +160,36 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
                 builder.show()
                 return@launch
             }
+            if (response.code() in 500..599) {
+                builder.setTitle("서버 오류입니다.")
+                    .setMessage("관리자에게 문의해주십시오.")
+                    .setPositiveButton("확인") { _, _ -> }
+                return@launch
+            }
             var errorObject: JSONObject? = null
             try {
                 errorObject = JSONObject(response.errorBody()!!.string())
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
-
             if (errorObject != null) {
-                val code:Int = errorObject["code"] as Int
-                if (code == 0 || code == 1) {
-                    var errorMessage = ""
+                var errorMessage = ""
 
-                    val errorArray = errorObject.getJSONArray("errors")
+                val errorArray = errorObject.getJSONArray("errors")
 
-                    var i = 0
-                    while (i < errorArray.length()) {
-                        val jsonObject = errorArray.getJSONObject(i)
-                        errorMessage += jsonObject["field"]
-                        errorMessage += "오류\n"
-                        errorMessage += jsonObject["message"]
-                        errorMessage += "\n"
-                        i++
-                    }
+                var i = 0
 
-                    builder.setTitle(errorObject["message"].toString())
-                        .setMessage(errorMessage)
-                        .setPositiveButton("확인") { _, _ -> }
-
-                    builder.show()
-
-                    return@launch
+                while (i < errorArray.length()) {
+                    val jsonObject = errorArray.getJSONObject(i)
+                    val errorCode = jsonObject["code"]
+                    if (errorCode == "NotFound")
+                        errorMessage += "전화번호를 입력해주세요.\n"
+                    i++
                 }
-                when (code%100) {
-                    1 -> builder.setTitle(errorObject["message"].toString())
-                        .setMessage("전화번호를 확인해주세요.")
-                        .setPositiveButton("확인") { _, _ -> }
-                    else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
-                        .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
-                        .setPositiveButton("확인") { _, _ -> }
-                }
+                builder.setTitle("다시 입력해주십시오.")
+                    .setMessage(errorMessage)
+                    .setPositiveButton("확인") { _, _ -> }
+
                 builder.show()
 
                 return@launch
@@ -241,8 +239,8 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
         }
         if (_id.value == "") {
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("id를 입력하지 않으셨습니다.")
-                .setMessage("id를 입력해주십시오.")
+            builder.setTitle("ID를 입력하지 않으셨습니다.")
+                .setMessage("ID를 입력해주십시오.")
                 .setPositiveButton("확인") { _, _ -> }
 
             builder.show()
@@ -288,44 +286,34 @@ class SignUpViewModel(private val repository: UserManagementRepository) : ViewMo
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
-
             if (errorObject != null) {
-                val code:Int = errorObject["code"] as Int
-                if (code == 0 || code == 1) {
-                    var errorMessage = ""
+                var errorMessage = ""
 
-                    val errorArray = errorObject.getJSONArray("errors")
+                val errorArray = errorObject.getJSONArray("errors")
 
-                    var i = 0
-                    while (i < errorArray.length()) {
-                        val jsonObject = errorArray.getJSONObject(i)
-                        errorMessage += jsonObject["field"]
-                        errorMessage += "오류\n"
-                        errorMessage += jsonObject["message"]
-                        errorMessage += "\n"
-                        i++
-                    }
-                    builder.setTitle(errorObject["message"].toString())
-                        .setMessage(errorMessage)
-                        .setPositiveButton("확인") { _, _ -> }
+                var i = 0
 
-                    builder.show()
-
-                    return@launch
+                while (i < errorArray.length()) {
+                    val jsonObject = errorArray.getJSONObject(i)
+                    val errorField = jsonObject["field"]
+                    val errorCode = jsonObject["code"]
+                    if (errorField == "userId" && errorCode == "Duplicated")
+                        errorMessage += "사용중인 ID입니다.\n"
+                    if (errorField == "phoneNumber" && errorCode == "Duplicated")
+                        errorMessage += "사용중인 전화번호입니다.\n"
+                    if (errorField == "userId" && errorCode == "Pattern")
+                        errorMessage += "잘못된 ID형식입니다.\n"
+                    if (errorField == "phoneNumber" && errorCode == "Pattern")
+                        errorMessage += "잘못된 전화번호 형식입니다.\n"
+                    i++
                 }
-                val errorCode = code%100
-                when (errorCode) {
-                    1 -> builder.setTitle("이미 사용중인 아이디입니다.")
-                        .setMessage("아이디를 확인해주세요.")
-                        .setPositiveButton("확인") { _, _ -> }
-                    2 -> builder.setTitle("이미 사용중인 전화번호입니다.")
-                        .setMessage("전화번호를 확인해주세요.")
-                        .setPositiveButton("확인") { _, _ -> }
-                    else -> builder.setTitle("네트워크 상황이 원할하지 않습니다.")
-                        .setMessage("잠시 후 다시 시도해 주십시오.\n지속적으로 반복될 경우 문의주시기 바랍니다.")
-                        .setPositiveButton("확인") { _, _ -> }
-                }
+                builder.setTitle("다시 입력해주십시오.")
+                    .setMessage(errorMessage)
+                    .setPositiveButton("확인") { _, _ -> }
+
                 builder.show()
+
+                return@launch
             }
         }
     }

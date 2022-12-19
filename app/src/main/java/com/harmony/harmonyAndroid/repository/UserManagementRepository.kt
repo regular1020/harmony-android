@@ -21,18 +21,18 @@ class UserManagementRepository(application: Application) {
     }
 
     suspend fun retrofitSignUp(modelSingUpComponent: ModelSignUpComponent): Response<JsonObject> {
-        return UserManagementObject.getSignUpService.postSignUp(hashMapOf("user_id" to modelSingUpComponent.id, "password" to modelSingUpComponent.pw, "phone_number" to modelSingUpComponent.phone))
+        return UserManagementObject.getSignUpService.postSignUp(hashMapOf("userId" to modelSingUpComponent.userId, "password" to modelSingUpComponent.password, "phoneNumber" to modelSingUpComponent.phoneNumber))
     }
 
     suspend fun retrofitSignIn(modelSignInComponent: ModelSignInComponent): Response<JsonObject> {
-        return UserManagementObject.getSignInService.postSignIn(hashMapOf("user_id" to modelSignInComponent.id, "password" to modelSignInComponent.pw))
+        return UserManagementObject.getSignInService.postSignIn(hashMapOf("userId" to modelSignInComponent.userId, "password" to modelSignInComponent.password))
     }
 
     suspend fun retrofitDuplicateCheckByID(modelDuplicateCheckByIDComponent: ModelDuplicateCheckByIDComponent): Response<JsonObject> {
-        return UserManagementObject.getSignUpService.getMemberByID(modelDuplicateCheckByIDComponent.user_id)
+        return UserManagementObject.getSignUpService.getMemberByID(modelDuplicateCheckByIDComponent.userId)
     }
 
     suspend fun retrofitDuplicateCheckByPhoneNumber(modelDuplicateCheckByPhoneNumberComponent: ModelDuplicateCheckByPhoneNumberComponent): Response<JsonObject> {
-        return UserManagementObject.getSignUpService.getMemberByPhone(modelDuplicateCheckByPhoneNumberComponent.phone_number)
+        return UserManagementObject.getSignUpService.getMemberByPhone(modelDuplicateCheckByPhoneNumberComponent.phoneNumber)
     }
 }
