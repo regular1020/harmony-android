@@ -1,5 +1,22 @@
 <resources>
-    <string name="app_name">Harmony</string>
+    <string name="app_name">harmony</string>
+    <string name="message_button_name">메시지</string>
+    <string name="message_delete_button_description">메시지를 삭제합니다.</string>
+    <string name="save">저장</string>
+    <string name="input_title">제목</string>
+    <string name="input_contents">본문</string>
+    <string name="receiver_phone">받는이 전화번호</string>
+    <string name="delete_button">삭제</string>
+    <string name="reply_button">답장</string>
+    <string name="message_box_appbar_title">받은 편지함</string>
+    <string name="send_new_message">새 편지 보내기</string>
+    <string name="sign_in_find_id">아이디 찾기</string>
+    <string name="sign_in_find_pw">비밀번호 찾기</string>
+    <string name="sign_in_id_input">ID</string>
+    <string name="sign_in_pw_input">PASSWORD</string>
+    <string name="sign_in_button">로그인</string>
+    <string name="check_button">중복확인</string>
+    <string name="split">|</string>
     <string name="sign_up_header">회원가입</string>
     <string name="id_input_innerText">ID(필수)</string>
     <string name="pw_input_innerText">비밀번호(알파벳 소문자, 숫자 포함 6~20자리)</string>
@@ -8,11 +25,4 @@
     <string name="terms_of_use">이용약관 동의</string>
     <string name="show_terms">보기</string>
     <string name="sign_up_button">가입하기</string>
-    <string name="sign_in_id_input">ID</string>
-    <string name="sign_in_pw_input">PASSWORD</string>
-    <string name="sign_in_button">로그인</string>
-    <string name="sign_in_find_id">아이디 찾기</string>
-    <string name="sign_in_find_pw">비밀번호 찾기</string>
-    <string name="check_button">중복확인</string>
-    <string name="split">|</string>
 </resources>

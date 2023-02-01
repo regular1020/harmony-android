@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
     id 'org.jetbrains.kotlin.android'
-    id 'androidx.navigation.safeargs.kotlin'
+    id("kotlin-parcelize")
 }
 
 Properties properties = new Properties()
@@ -12,7 +13,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.harmony"
+        applicationId "com.harmony.harmonyAndroid"
         minSdk 21
         targetSdk 32
         versionCode 1
@@ -84,4 +85,15 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.4.2'
 
     implementation 'androidx.preference:preference-ktx:1.2.0'
+
+    implementation platform('com.google.firebase:firebase-bom:30.5.0')
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 }
